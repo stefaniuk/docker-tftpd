@@ -1,4 +1,3 @@
 #!/bin/bash
 
-setcap 'cap_net_bind_service=+ep' /usr/sbin/in.tftpd
-sleep 1
+chown -R $SYSTEM_USER:$SYSTEM_USER /var/lib/tftpboot

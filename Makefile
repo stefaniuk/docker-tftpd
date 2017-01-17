@@ -28,11 +28,16 @@ build:
 	docker tag $(IMAGE):$(shell cat VERSION) $(IMAGE):latest
 
 start:
-	docker run --detach \
+	docker stop $(IMAGE) > /dev/null 2>&1 ||:
+	docker rm $(IMAGE) > /dev/null 2>&1 ||:
+	docker run --detach --interactive --tty \
 		--name $(NAME) \
 		--hostname $(NAME) \
+		--env "DEBUG=true" \
+		--env "TRACE=true" \
 		--volume $(shell pwd)/data:/var/lib/tftpboot \
-		--publish 6969:69 \
+		--publish 69:69/udp \
+		--privileged \
 		$(IMAGE)
 
 stop:
@@ -45,7 +50,7 @@ test:
 	docker exec --interactive --tty \
 		--user "default" \
 		$(NAME) \
-		ps aux
+		ps auxw
 
 bash:
 	docker exec --interactive --tty \
