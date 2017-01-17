@@ -23,8 +23,7 @@ VOLUME [ "/var/lib/tftpboot" ]
 EXPOSE 69/udp
 
 COPY assets/sbin/bootstrap.sh /sbin/bootstrap.sh
-#CMD [ "/usr/sbin/in.tftpd", "--listen", "--user", "root", "--address", "0.0.0.0:6900", "--verbose", "--verbosity", "99", "/var/lib/tftpboot" ]
-CMD /usr/sbin/in.tftpd --foreground --user tftp --address 0.0.0.0:69 --secure /var/lib/tftpboot
+CMD [ "/usr/sbin/in.tftpd", "--foreground", "--user", "tftp", "--address", "0.0.0.0:69", "--secure", "--create", "/var/lib/tftpboot" ]
 
 ### METADATA ###################################################################
 
