@@ -3,7 +3,7 @@ FROM stefaniuk/ubuntu:16.04-20170117
 ARG APT_PROXY
 ARG APT_PROXY_SSL
 ENV TFTPD_HPA_VERSION="5.2" \
-    RUN_AS="root"
+    GOSU="false"
 
 RUN set -ex \
     \
@@ -23,7 +23,8 @@ VOLUME [ "/var/lib/tftpboot" ]
 EXPOSE 69/udp
 
 COPY assets/sbin/bootstrap.sh /sbin/bootstrap.sh
-CMD [ "/usr/sbin/in.tftpd", "--listen", "--user", "root", "--address", "0.0.0.0:69", "--secure", "/var/lib/tftpboot" ]
+#CMD [ "/usr/sbin/in.tftpd", "--listen", "--user", "root", "--address", "0.0.0.0:6900", "--verbose", "--verbosity", "99", "/var/lib/tftpboot" ]
+CMD /usr/sbin/in.tftpd --foreground --user tftp --address 0.0.0.0:69 --secure /var/lib/tftpboot
 
 ### METADATA ###################################################################
 

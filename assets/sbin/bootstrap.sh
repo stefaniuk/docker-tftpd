@@ -1,3 +1,3 @@
 #!/bin/bash
 
-chown -R $SYSTEM_USER:$SYSTEM_USER /var/lib/tftpboot
+chown -R tftp:tftp /var/lib/tftpboot

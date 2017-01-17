@@ -33,11 +33,8 @@ start:
 	docker run --detach --interactive --tty \
 		--name $(NAME) \
 		--hostname $(NAME) \
-		--env "DEBUG=true" \
-		--env "TRACE=true" \
 		--volume $(shell pwd)/data:/var/lib/tftpboot \
 		--publish 69:69/udp \
-		--privileged \
 		$(IMAGE)
 
 stop:
