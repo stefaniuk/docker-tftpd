@@ -34,7 +34,7 @@ start:
 		--name $(NAME) \
 		--hostname $(NAME) \
 		--volume $(shell pwd)/data:/var/lib/tftpboot \
-		--publish 69:69/udp \
+		--publish 6900:6900/udp \
 		$(IMAGE)
 
 stop:

@@ -1,4 +1,4 @@
-FROM stefaniuk/ubuntu:16.04-20170117
+FROM stefaniuk/ubuntu:16.04-20170118
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -13,17 +13,15 @@ RUN set -ex \
     && apt-get --yes install \
         tftp tftpd-hpa=${TFTPD_HPA_VERSION}* \
     \
-    && setcap 'cap_net_bind_service=+ep' /usr/sbin/in.tftpd \
-    \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
 
 WORKDIR /var/lib/tftpboot
 VOLUME [ "/var/lib/tftpboot" ]
-EXPOSE 69/udp
+EXPOSE 6900/udp
 
 COPY assets/sbin/bootstrap.sh /sbin/bootstrap.sh
-CMD [ "/usr/sbin/in.tftpd", "--foreground", "--user", "tftp", "--address", "0.0.0.0:69", "--secure", "--create", "/var/lib/tftpboot" ]
+CMD [ "/usr/sbin/in.tftpd", "--foreground", "--user", "tftp", "--address", "0.0.0.0:6900", "--secure", "--create", "--verbose", "/var/lib/tftpboot" ]
 
 ### METADATA ###################################################################
 

@@ -1,3 +1,4 @@
 #!/bin/bash
 
-chown -R tftp:tftp /var/lib/tftpboot
+chmod 777 /var/lib/tftpboot
+chown -R tftp /var/lib/tftpboot
