@@ -1,0 +1,15 @@
+machine:
+  services:
+    - docker
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - docker info
+    - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
+    - docker build --tag stefaniuk/tftpd .
+    - mkdir -p ~/docker; docker save stefaniuk/tftpd > ~/docker/image.tar
+test:
+  override:
+    - docker run --detach --interactive --tty --publish 6900:6900/udp stefaniuk/tftpd; sleep 10
+    - nc -u -z -v localhost 6900
